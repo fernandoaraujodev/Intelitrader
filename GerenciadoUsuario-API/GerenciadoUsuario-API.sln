@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciandoUsuario.Dominio", "GerenciandoUsuario.Dominio\GerenciandoUsuario.Dominio.csproj", "{C7A92E54-EF84-4E84-97D8-152CCD36819C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GerenciandoUsuario.Dominio", "GerenciandoUsuario.Dominio\GerenciandoUsuario.Dominio.csproj", "{C7A92E54-EF84-4E84-97D8-152CCD36819C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciandoUsuario.Testes", "GerenciandoUsuario.Testes\GerenciandoUsuario.Testes.csproj", "{DCE0B9DA-F3B2-4B72-A313-AD7690F17ECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GerenciandoUsuario.Testes", "GerenciandoUsuario.Testes\GerenciandoUsuario.Testes.csproj", "{DCE0B9DA-F3B2-4B72-A313-AD7690F17ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciandoUsuario.API", "GerenciandoUsuario.API\GerenciandoUsuario.API.csproj", "{D5FC0302-CA2F-4A93-AFCF-9F98107C04CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DCE0B9DA-F3B2-4B72-A313-AD7690F17ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCE0B9DA-F3B2-4B72-A313-AD7690F17ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCE0B9DA-F3B2-4B72-A313-AD7690F17ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5FC0302-CA2F-4A93-AFCF-9F98107C04CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5FC0302-CA2F-4A93-AFCF-9F98107C04CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5FC0302-CA2F-4A93-AFCF-9F98107C04CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5FC0302-CA2F-4A93-AFCF-9F98107C04CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
