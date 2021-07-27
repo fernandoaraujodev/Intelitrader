@@ -1,5 +1,12 @@
+
+
+using GerenciandoUsuario.Data.Repositorios;
+using GerenciandoUsuario.Dominio.Handlers;
+using GerenciandoUsuario.Dominio.Repositorios;
+using GerenciandoUsuario.Infra.Data.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,13 +36,19 @@ namespace GerenciandoUsuario.API
             });
 
             //Conexão
-            //TO DO: Gerenciar strings de conexão
-            //services.AddDbContext<UsuarioContext>(o => o.UseSqlServer("Data Source=DESKTOP-DA6MBAT\\SQLEXPRESS;Initial Catalog=GerenciandoUsuario;user id=sa;password=ps132"));
+            //TO DO: Gerenciar string de conexão
+            services.AddDbContext<GerenciandoUsuarioContext>(o => o.UseSqlServer("Data Source=DESKTOP-DA6MBAT\\SQLEXPRESS;Initial Catalog=GerenciandoUsuario;user id=sa;password=ps132"));
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api GerenciandoUsuario", Version = "V1" });
             });
+
+            #region Injenção de Dependência
+            //<aonde tiver isso, vc vai trabalhar com isso>
+            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            services.AddTransient<CriarUsuarioHandle, CriarUsuarioHandle>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
