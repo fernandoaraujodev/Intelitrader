@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GerenciandoUsuario.Data.Migrations
+namespace GerenciandoUsuario_API.Migrations
 {
-    public partial class BancoIniciado : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

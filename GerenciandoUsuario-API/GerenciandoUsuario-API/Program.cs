@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GerenciandoUsuario.API
+namespace GerenciandoUsuario_API
 {
     public class Program
     {

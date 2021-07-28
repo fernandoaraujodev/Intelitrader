@@ -1,27 +1,26 @@
-﻿using Flunt.Notifications;
-using GerenciandoUsuario.Dominio;
+﻿using GerenciandoUsuario_API.Domains;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace GerenciandoUsuario.Infra.Data.Contexts
+namespace GerenciandoUsuario_API.Contexts
 {
     public class GerenciandoUsuarioContext : DbContext
     {
-
-        public GerenciandoUsuarioContext(DbContextOptions<GerenciandoUsuarioContext> options) : base(options)
-        {
-
-        }
-
-        // Criando Tabela
         public DbSet<Usuario> Usuarios { get; set; }
 
 
+        // String de conexão com o banco
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-DA6MBAT\\SQLEXPRESS;Initial Catalog=Intelitrader;user id=sa;password=ps132");
+            }
+        }
+
+
+        // Modelando o DB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<Notification>();
 
             #region TabelaUsuario
 
