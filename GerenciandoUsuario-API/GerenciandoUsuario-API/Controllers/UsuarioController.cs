@@ -1,67 +1,122 @@
 ﻿using GerenciandoUsuario_API.Domains;
 using GerenciandoUsuario_API.Interfaces;
 using GerenciandoUsuario_API.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace GerenciandoUsuario_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/usuario")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-
+        
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public UsuarioController()
+        public UsuarioController(IUsuarioRepository usuarioRepository)
         {
-            _usuarioRepository = new UsuarioRepository();
+            _usuarioRepository = usuarioRepository;
+        
         }
 
+
+        #region Leitura
+
+        /// <summary>
+        /// Mostra todos os usuários cadastrados
+        /// </summary>
+        /// <returns>retorna uma lista com todas os usuários</returns>
+        [HttpGet]
+        public IActionResult GetUser()
+        {
+
+            if (!ModelState.IsValid)
+            {
+                //statusCode400
+                return BadRequest(ModelState);
+            }
+            else
+            {
+
+                var usuario = _usuarioRepository.Listar();
+
+                if (usuario.Count == 0)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    //statusCode 200
+                    return Ok(usuario);
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Busca o usuário com o id passado
+        /// </summary>
+        /// <param name="id">Id do usuário</param>
+        /// <returns>Objeto usuário</returns>
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(Guid id)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                //statusCode400
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                // Objeto do tipo usuário que recebe um objeto do método BuscarPorId 
+                Usuario usuario = _usuarioRepository.BuscarPorId(id);
+
+                // Se o objeto estiver nulo retorna NoContent 
+                if (usuario == null)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    //statusCode200
+                    return Ok(usuario);
+                }
+            }
+
+        }
+        #endregion
+
+        #region Gravacao
         /// <summary>
         /// Cadastra um novo usuário
         /// </summary>
         /// <param name="usuario">Objeto Usuario</param>
-        // POST api/<UsuarioController>
         [HttpPost]
         public IActionResult CreateUser([FromBody] Usuario usuario)
         {
             try
-            { 
+            {
+                //Validando o modelo
+                if (!ModelState.IsValid)
+                {
+                    //statusCode400
+                    return BadRequest(ModelState);
+                }
+
                 //Adiciona um novo usuário
                 _usuarioRepository.Adicionar(usuario);
 
                 //statusCode 200
                 return Ok(usuario);
             }
-            catch (Exception ex)
+            catch
             {
-                return BadRequest(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, usuario);
             }
-        }
 
 
-        /// <summary>
-        /// Mostra todos os usuários cadastrados
-        /// </summary>
-        /// <returns>retorna uma lista com todas os usuários</returns>
-        // GET: api/<UsuarioController>
-        [HttpGet]
-        public IActionResult GetUser()
-        {
-            try
-            {
-                var usuario = _usuarioRepository.Listar();
-
-                if (usuario.Count == 0)
-                    return NoContent();
-
-                return Ok(usuario);
-            }
-            catch (System.Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
 
@@ -71,54 +126,23 @@ namespace GerenciandoUsuario_API.Controllers
         /// </summary>
         /// <param name="id">Id do usuario que será alterada</param>
         /// <param name="usuario">Dados do usuário que serão alterados</param>
-        // PUT api/<UsuarioController>/334E9136-6C38-4C1C-9B8D-54D193976C84
         [HttpPut("{id}")]
         public IActionResult PutUser(Guid id, [FromBody] Usuario usuario)
         {
-            try
+
+            if (!ModelState.IsValid)
+            {
+                //statusCode400
+                return BadRequest(ModelState);
+            }
+            else
             {
                 _usuarioRepository.Editar(id, usuario);
 
-
+                //statusCode 200
                 return Ok(usuario);
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
-
-        /// <summary>
-        /// Busca o usuário com o id passado
-        /// </summary>
-        /// <param name="id">Id do usuário</param>
-        /// <returns>Objeto usuário</returns>
-        // GET api/<UsuarioController>/334E9136-6C38-4C1C-9B8D-54D193976C84
-        [HttpGet("{id}")]
-        public IActionResult GetUserById(Guid id)
-        {
-            try
-            {
-                // Objeto do tipo usuário que recebe um objeto do método BuscarPorId 
-                Usuario user = _usuarioRepository.BuscarPorId(id);
-
-                // Se o objeto estiver nulo retorna NoContent 
-                if (user == null)
-                {
-                    return NoContent();
-                }
-                else
-                {
-                    // Se o objeto for encontrado retorna 200
-                    return Ok(user);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Se ocorrer alguma exceção retorna a mensagem de erro para o frontend
-                return BadRequest(ex.Message);
-            }
         }
 
 
@@ -127,11 +151,16 @@ namespace GerenciandoUsuario_API.Controllers
         /// </summary>
         /// <param name="id">Id do usuário</param>
         /// <returns></returns>
-        // DELETE api/<UsuarioController>/334E9136-6C38-4C1C-9B8D-54D193976C84
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(Guid id)
         {
-            try
+
+            if (!ModelState.IsValid)
+            {
+                //statusCode400
+                return BadRequest(ModelState);
+            }
+            else
             {
                 Usuario usuario = _usuarioRepository.BuscarPorId(id);
 
@@ -145,20 +174,16 @@ namespace GerenciandoUsuario_API.Controllers
                     _usuarioRepository.Remover(id);
 
                     return Ok(usuario);
-                }
+                };
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
         }
 
         /*
-        //TO DO:sexo colocar como enum
-
+        //TO DO:
                mudar range de data de nascimento
-                public class CustomDateAttribute : RangeAttribute
-                {
+               public class CustomDateAttribute : RangeAttribute
+               {
                   public CustomDateAttribute()
                     : base(typeof(DateTime), 
                             DateTime.Now.AddYears(01-01-2013).ToShortDateString(),
@@ -168,8 +193,9 @@ namespace GerenciandoUsuario_API.Controllers
                 https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime
 
                 como retornar internal server error aspnetcore
-
-                ajustar a instancia do controller
+                return StatusCode(StatusCodes.Status500InternalServerError, responseObject);
         */
     }
+    #endregion
+
 }

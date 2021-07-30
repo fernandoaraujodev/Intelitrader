@@ -17,10 +17,8 @@ namespace GerenciandoUsuario_API.Repositories
             _ctx = new GerenciandoUsuarioContext();
         }
 
-
         //Implementando a interface
         #region Leitura
-
         public Usuario BuscarPorId(Guid id)
         {
             try
@@ -37,8 +35,7 @@ namespace GerenciandoUsuario_API.Repositories
         {
             try
             {
-                return _ctx.Usuarios
-                    .ToList();
+                return _ctx.Usuarios.OrderBy(o => o.DataCriacao).ToList();
             }
             catch (Exception ex)
             {
@@ -50,56 +47,38 @@ namespace GerenciandoUsuario_API.Repositories
         #region Gravacao
         public void Adicionar(Usuario usuario)
         {
-            try
-            {
-                // O contexto recebe o objeto inst do método
-                _ctx.Add(usuario);
+            // O contexto recebe o objeto inst do método
+            _ctx.Add(usuario);
 
-
-                //Salva as alterações no banco de dados Edux
-                _ctx.SaveChanges();
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
+            //Salva as alterações no banco de dados Edux
+            _ctx.SaveChanges();
         }
 
         public void Editar(Guid id, Usuario usuario)
         {
-            try
+            
+            // BuscarPorId para verificar a existência do usuário informado
+            Usuario usuarioTemp = BuscarPorId(id);
+
+            //Se ela não existir é informado que o usuário não foi encontrado
+            if (usuarioTemp == null)
             {
-                // BuscarPorId para verificar a existência do usuário informado
-                Usuario usuarioTemp = BuscarPorId(id);
-
-                //Se ela não existir é informado que o usuário não foi encontrado
-                if (usuarioTemp == null)
-                {
-                    throw new Exception("Usuário não encontrado");
-                }
-                else
-                {
-                    //Caso contrário salva todas as alterações no objeto usuarioTemp
-                    usuarioTemp.Id = usuario.Id;
-                    usuarioTemp.Nome = usuario.Nome;
-                    usuarioTemp.DataNascimento = usuario.DataNascimento;
-                    usuarioTemp.Sexo = usuario.Sexo;
-                    usuarioTemp.DataCriacao = usuario.DataCriacao;
-                    usuarioTemp.DataAlteracao = usuario.DataAlteracao;
-
-
-                    //Atualiza com o id informado
-                    _ctx.Usuarios.Update(usuarioTemp);
-
-                    //Salva as alterações no contexto
-                    _ctx.SaveChanges();
-                }
+                throw new Exception("Usuário não encontrado");
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.Message);
+                 //Caso contrário salva todas as alterações no objeto usuarioTemp
+                 usuarioTemp.Nome = usuario.Nome;
+                 usuarioTemp.DataNascimento = usuario.DataNascimento;
+                 usuarioTemp.Sexo = usuario.Sexo;
+                 usuarioTemp.DataAlteracao = usuario.DataAlteracao;
+
+
+                 //Atualiza com o id informado
+                 _ctx.Usuarios.Update(usuarioTemp);
+
+                 //Salva as alterações no contexto
+                 _ctx.SaveChanges();
             }
         }
 

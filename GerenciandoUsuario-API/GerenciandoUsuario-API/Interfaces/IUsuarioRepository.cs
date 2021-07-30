@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GerenciandoUsuario_API.Interfaces
 {
-    interface IUsuarioRepository
+    public interface IUsuarioRepository
     {
         List<Usuario> Listar();
 
