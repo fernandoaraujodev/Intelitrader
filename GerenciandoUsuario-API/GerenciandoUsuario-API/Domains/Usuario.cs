@@ -17,13 +17,13 @@ namespace GerenciandoUsuario_API.Domains
 
 
         [DataType(DataType.Date)]
-        [Range(typeof(DateTime), "1921-01-01", "2021-07-30", ErrorMessage = "Verifique a data de nascimento")]
+        [Range(typeof(DateTime), "1921-01-01", "2021-08-02", ErrorMessage = "Verifique a data de nascimento")]
         [Required(ErrorMessage = "O campo {0} não pode ficar em branco.")]
         public DateTime DataNascimento { get; set; }
 
 
         [Required(ErrorMessage = "O campo {0} não pode ficar em branco.")]
-        //[Range(1, 3)]
+        [Range(1, 3)]
         public EnSexo Sexo { get; set; }
    
 

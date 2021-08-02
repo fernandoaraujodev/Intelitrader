@@ -21,26 +21,13 @@ namespace GerenciandoUsuario_API.Repositories
         #region Leitura
         public Usuario BuscarPorId(Guid id)
         {
-            try
-            {
-                return _ctx.Usuarios.Find(id);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+        
+            return _ctx.Usuarios.Find(id);
         }
 
         public List<Usuario> Listar()
         {
-            try
-            {
-                return _ctx.Usuarios.OrderBy(o => o.DataCriacao).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return _ctx.Usuarios.OrderBy(o => o.DataCriacao).ToList();
         }
         #endregion
 
@@ -84,29 +71,24 @@ namespace GerenciandoUsuario_API.Repositories
 
         public void Remover(Guid id)
         {
-            try
-            {
-                //Usa o método BuscarPorId para verificar a existência da instituição informada
-                Usuario usuarioTemp = BuscarPorId(id);
+           
+            //Usa o método BuscarPorId para verificar a existência da instituição informada
+            Usuario usuarioTemp = BuscarPorId(id);
 
-                //Se ela não existir é informado que a instituição não foi encontrada
-                if (usuarioTemp == null)
-                {
-                    throw new Exception("Usuário não encontrado");
-                }
-                else
-                {
-                    //Remove a instituição informada do contexto
-                    _ctx.Usuarios.Remove(usuarioTemp);
-
-                    //Salva todas as alterações
-                    _ctx.SaveChanges();
-                }
-            }
-            catch (Exception ex)
+            //Se ela não existir é informado que a instituição não foi encontrada
+            if (usuarioTemp == null)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Usuário não encontrado");
             }
+            else
+            {
+                //Remove a instituição informada do contexto
+                _ctx.Usuarios.Remove(usuarioTemp);
+
+                //Salva todas as alterações
+                _ctx.SaveChanges();
+            }
+           
         }
         #endregion
 

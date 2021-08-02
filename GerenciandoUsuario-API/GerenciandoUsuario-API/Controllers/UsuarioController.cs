@@ -3,6 +3,7 @@ using GerenciandoUsuario_API.Interfaces;
 using GerenciandoUsuario_API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace GerenciandoUsuario_API.Controllers
@@ -13,11 +14,20 @@ namespace GerenciandoUsuario_API.Controllers
     {
         
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly ILogger _logger;
+        public string Messagem { get; set; }
 
-        public UsuarioController(IUsuarioRepository usuarioRepository)
+        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
+            _logger = logger;
         
+        }
+
+        protected void Logs(Exception ex)
+        {
+            _logger.LogInformation($"Houve um erro: {ex.Message}. {DateTime.UtcNow.ToLongTimeString()}");
+            System.Console.WriteLine($"Houve um erro: {ex.Message}. {DateTime.UtcNow.ToLongTimeString()}");
         }
 
 
@@ -31,8 +41,12 @@ namespace GerenciandoUsuario_API.Controllers
         public IActionResult GetUser()
         {
 
+            _logger.LogInformation($"Listagem de usuários realizada {DateTime.UtcNow.ToLongTimeString()}");
+            System.Console.WriteLine($"Listagem de usuários realizada {DateTime.UtcNow.ToLongTimeString()}");
+
             if (!ModelState.IsValid)
             {
+
                 //statusCode400
                 return BadRequest(ModelState);
             }
@@ -47,8 +61,11 @@ namespace GerenciandoUsuario_API.Controllers
                 }
                 else
                 {
-                    //statusCode 200
-                    return Ok(usuario);
+                    return Ok(new
+                    {
+                        Total  = usuario.Count,
+                        Data = usuario
+                    });
                 }
             }
 
@@ -96,6 +113,7 @@ namespace GerenciandoUsuario_API.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] Usuario usuario)
         {
+
             try
             {
                 //Validando o modelo
@@ -108,14 +126,18 @@ namespace GerenciandoUsuario_API.Controllers
                 //Adiciona um novo usuário
                 _usuarioRepository.Adicionar(usuario);
 
+                _logger.LogInformation($"Usuário criado {DateTime.UtcNow.ToLongTimeString()}");
+                System.Console.WriteLine($"Usuário criado {DateTime.UtcNow.ToLongTimeString()}");
+
                 //statusCode 200
                 return Ok(usuario);
             }
-            catch
+            catch(Exception ex)
             {
+                Logs(ex);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, usuario);
             }
-
 
         }
 
@@ -130,19 +152,28 @@ namespace GerenciandoUsuario_API.Controllers
         public IActionResult PutUser(Guid id, [FromBody] Usuario usuario)
         {
 
-            if (!ModelState.IsValid)
+            try
             {
-                //statusCode400
-                return BadRequest(ModelState);
-            }
-            else
-            {
+                if (!ModelState.IsValid)
+                {
+                    //statusCode400
+                    return BadRequest(ModelState);
+                }
+
                 _usuarioRepository.Editar(id, usuario);
 
-                //statusCode 200
+                _logger.LogInformation($"O usuário {id} foi alterado {DateTime.UtcNow.ToLongTimeString()}");
+                System.Console.WriteLine($"O usuário {id} foi alterado {DateTime.UtcNow.ToLongTimeString()}");
+
                 return Ok(usuario);
             }
+            catch (Exception ex)
+            {
+                Logs(ex);
 
+                return StatusCode(StatusCodes.Status500InternalServerError, usuario);
+
+            }
         }
 
 
@@ -155,12 +186,7 @@ namespace GerenciandoUsuario_API.Controllers
         public IActionResult DeleteUser(Guid id)
         {
 
-            if (!ModelState.IsValid)
-            {
-                //statusCode400
-                return BadRequest(ModelState);
-            }
-            else
+            try
             {
                 Usuario usuario = _usuarioRepository.BuscarPorId(id);
 
@@ -173,28 +199,21 @@ namespace GerenciandoUsuario_API.Controllers
                     //Passa o id do usuario que será excluído
                     _usuarioRepository.Remover(id);
 
+                    _logger.LogInformation($"O usuário {id} foi removido {DateTime.UtcNow.ToLongTimeString()}");
+                    System.Console.WriteLine($"O usuário {id} foi removido {DateTime.UtcNow.ToLongTimeString()}");
+
                     return Ok(usuario);
                 };
+
+            }
+            catch (Exception ex)
+            {
+                Logs(ex);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
         }
-
-        /*
-        //TO DO:
-               mudar range de data de nascimento
-               public class CustomDateAttribute : RangeAttribute
-               {
-                  public CustomDateAttribute()
-                    : base(typeof(DateTime), 
-                            DateTime.Now.AddYears(01-01-2013).ToShortDateString(),
-                            DateTime.Now.ToShortDateString()) 
-                  { } 
-                }
-                https://stackoverflow.com/questions/17321948/is-there-a-rangeattribute-for-datetime
-
-                como retornar internal server error aspnetcore
-                return StatusCode(StatusCodes.Status500InternalServerError, responseObject);
-        */
     }
     #endregion
 

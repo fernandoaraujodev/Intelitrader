@@ -1,5 +1,7 @@
 ﻿using GerenciandoUsuario_API.Domains;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 
 namespace GerenciandoUsuario_API.Contexts
 {
@@ -11,9 +13,15 @@ namespace GerenciandoUsuario_API.Contexts
         // String de conexão com o banco
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-DA6MBAT\\SQLEXPRESS;Initial Catalog=Intelitrader;user id=sa;password=ps132");
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             }
         }
 
