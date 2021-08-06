@@ -15,19 +15,23 @@ namespace GerenciandoUsuario_API.Controllers
         
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly ILogger _logger;
-        public string Messagem { get; set; }
+        public string Message { get; set; }
+
+        private readonly Guid _instanceId = Guid.NewGuid();
 
         public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
             _logger = logger;
-        
+
+            _logger.LogInformation($"Repo Instanceid{_instanceId}. Info: Repositório criado com sucesso");
+
         }
 
         protected void Logs(Exception ex)
         {
-            _logger.LogInformation($"Houve um erro: {ex.Message}. {DateTime.UtcNow.ToLongTimeString()}");
-            System.Console.WriteLine($"Houve um erro: {ex.Message}. {DateTime.UtcNow.ToLongTimeString()}");
+            _logger.LogInformation($"Houve um erro: {ex.Message}.");
+            System.Console.WriteLine($"Houve um erro: {ex.Message}.");
         }
 
 
@@ -41,8 +45,8 @@ namespace GerenciandoUsuario_API.Controllers
         public IActionResult GetUser()
         {
 
-            _logger.LogInformation($"Listagem de usuários realizada {DateTime.UtcNow.ToLongTimeString()}");
-            System.Console.WriteLine($"Listagem de usuários realizada {DateTime.UtcNow.ToLongTimeString()}");
+            _logger.LogInformation($"Listagem de usuários realizada");
+            System.Console.WriteLine($"Listagem de usuários realizada");
 
             if (!ModelState.IsValid)
             {
@@ -126,8 +130,7 @@ namespace GerenciandoUsuario_API.Controllers
                 //Adiciona um novo usuário
                 _usuarioRepository.Adicionar(usuario);
 
-                _logger.LogInformation($"Usuário criado {DateTime.UtcNow.ToLongTimeString()}");
-                System.Console.WriteLine($"Usuário criado {DateTime.UtcNow.ToLongTimeString()}");
+                _logger.LogInformation($"Repo Instanceid{_instanceId}. Info: usuário criado com sucesso");
 
                 //statusCode 200
                 return Ok(usuario);
@@ -162,8 +165,8 @@ namespace GerenciandoUsuario_API.Controllers
 
                 _usuarioRepository.Editar(id, usuario);
 
-                _logger.LogInformation($"O usuário {id} foi alterado {DateTime.UtcNow.ToLongTimeString()}");
-                System.Console.WriteLine($"O usuário {id} foi alterado {DateTime.UtcNow.ToLongTimeString()}");
+                _logger.LogInformation($"O usuário {id} foi alterado");
+                System.Console.WriteLine($"O usuário {id} foi alterado");
 
                 return Ok(usuario);
             }
@@ -199,8 +202,8 @@ namespace GerenciandoUsuario_API.Controllers
                     //Passa o id do usuario que será excluído
                     _usuarioRepository.Remover(id);
 
-                    _logger.LogInformation($"O usuário {id} foi removido {DateTime.UtcNow.ToLongTimeString()}");
-                    System.Console.WriteLine($"O usuário {id} foi removido {DateTime.UtcNow.ToLongTimeString()}");
+                    _logger.LogInformation($"O usuário {id} foi removido");
+                    System.Console.WriteLine($"O usuário {id} foi removido");
 
                     return Ok(usuario);
                 };
