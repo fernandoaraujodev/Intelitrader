@@ -3,12 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IntelitraderMobile.Views.ItemDetailPage"
              Title="{Binding Title}">
+    
+    <!--PAGINA DE DETALHE-->
 
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Text}" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Description}" FontSize="Small"/>
+        <!--Nome-->
+        <Label Text="Nome:" FontSize="Medium" />
+        <Editor
+                    Text="{Binding Nome, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                    AbsoluteLayout.LayoutBounds="0,0,1.01,100">
+        </Editor>
+        <Label Text="{Binding Nome}" IsVisible="{Binding IsPlaceHolderVisible}" HorizontalTextAlignment="Center"
+                                       AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
+                                       AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
+        <!--Sexo-->
+        <Label Text="Sexo:" FontSize="Medium" />
+        <Editor
+                    Text="{Binding Sexo, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                    AbsoluteLayout.LayoutBounds="0,0,1.01,100">
+        </Editor>
+        <Label Text="{Binding Sexo}" IsVisible="{Binding IsPlaceHolderVisible}" HorizontalTextAlignment="Center"
+                                       AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
+                                       AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
+        <!--Data de nascimento-->
+        <Label Text="Data de Nascimento:" FontSize="Medium" />
+        <Editor
+                    Text="{Binding DataNascimento, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                    AbsoluteLayout.LayoutBounds="0,0,1.01,100">
+        </Editor>
+        <Label Text="{Binding DataNascimento}" IsVisible="{Binding IsPlaceHolderVisible}" HorizontalTextAlignment="Center"
+                                       AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
+                                       AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
+
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Remove" Command="{Binding DeleteItemCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Edit" Command="{Binding EditItemCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
     </StackLayout>
-    
 </ContentPage>

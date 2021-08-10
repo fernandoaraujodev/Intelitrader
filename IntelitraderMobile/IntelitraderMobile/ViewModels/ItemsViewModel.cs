@@ -1,4 +1,5 @@
 ﻿using IntelitraderMobile.Models;
+using IntelitraderMobile.Services;
 using IntelitraderMobile.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -10,20 +11,24 @@ namespace IntelitraderMobile.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Usuario _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Usuario> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Usuario> ItemTapped { get; }
+
+        ApiUsuarioService _ApiUsuarioService;
 
         public ItemsViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            Title = "Intelitrader";
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            Items = new ObservableCollection<Usuario>();
+
+            _ApiUsuarioService = new ApiUsuarioService();
+
+            ItemTapped = new Command<Usuario>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -35,7 +40,7 @@ namespace IntelitraderMobile.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await _ApiUsuarioService.GetUsers();
                 foreach (var item in items)
                 {
                     Items.Add(item);
@@ -57,7 +62,7 @@ namespace IntelitraderMobile.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public Usuario SelectedItem
         {
             get => _selectedItem;
             set
@@ -72,7 +77,7 @@ namespace IntelitraderMobile.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(Usuario item)
         {
             if (item == null)
                 return;

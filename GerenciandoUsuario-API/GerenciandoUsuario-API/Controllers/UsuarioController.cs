@@ -17,15 +17,10 @@ namespace GerenciandoUsuario_API.Controllers
         private readonly ILogger _logger;
         public string Message { get; set; }
 
-        private readonly Guid _instanceId = Guid.NewGuid();
-
         public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
             _logger = logger;
-
-            _logger.LogInformation($"Repo Instanceid{_instanceId}. Info: Repositório criado com sucesso");
-
         }
 
         protected void Logs(Exception ex)
@@ -45,9 +40,6 @@ namespace GerenciandoUsuario_API.Controllers
         public IActionResult GetUser()
         {
 
-            _logger.LogInformation($"Listagem de usuários realizada");
-            System.Console.WriteLine($"Listagem de usuários realizada");
-
             if (!ModelState.IsValid)
             {
 
@@ -65,6 +57,9 @@ namespace GerenciandoUsuario_API.Controllers
                 }
                 else
                 {
+                    _logger.LogInformation($"Listagem de usuários realizada");
+                    System.Console.WriteLine($"Listagem de usuários realizada");
+
                     return Ok(new
                     {
                         Total  = usuario.Count,
@@ -101,6 +96,9 @@ namespace GerenciandoUsuario_API.Controllers
                 }
                 else
                 {
+                    _logger.LogInformation($"O usuário com {id} foi encontrado");
+                    System.Console.WriteLine($"O usuário com {id} foi encontrado");
+
                     //statusCode200
                     return Ok(usuario);
                 }
@@ -121,7 +119,7 @@ namespace GerenciandoUsuario_API.Controllers
             try
             {
                 //Validando o modelo
-                if (!ModelState.IsValid)
+                if (usuario == null || !ModelState.IsValid)
                 {
                     //statusCode400
                     return BadRequest(ModelState);
@@ -130,7 +128,8 @@ namespace GerenciandoUsuario_API.Controllers
                 //Adiciona um novo usuário
                 _usuarioRepository.Adicionar(usuario);
 
-                _logger.LogInformation($"Repo Instanceid{_instanceId}. Info: usuário criado com sucesso");
+                _logger.LogInformation($"O usuário foi criado com sucesso");
+                System.Console.WriteLine($"O usuário foi criado com sucesso");
 
                 //statusCode 200
                 return Ok(usuario);

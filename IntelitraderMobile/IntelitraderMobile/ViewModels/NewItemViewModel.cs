@@ -1,4 +1,5 @@
 ﻿using IntelitraderMobile.Models;
+using IntelitraderMobile.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,16 @@ namespace IntelitraderMobile.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
-        private string text;
-        private string description;
+        private string nome;
+        private string sexo;
+        private string dataNascimento;
+
+        ApiUsuarioService _ApiUsuarioService;
 
         public NewItemViewModel()
         {
+            _ApiUsuarioService = new ApiUsuarioService();
+
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             this.PropertyChanged +=
@@ -22,20 +28,39 @@ namespace IntelitraderMobile.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
+            return !String.IsNullOrWhiteSpace(nome)
+                && !String.IsNullOrWhiteSpace(sexo)
+                && !String.IsNullOrWhiteSpace(dataNascimento);
         }
 
-        public string Text
+        public string Nome
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            get => nome;
+            set
+            {
+                nome = value;
+                OnPropertyChanged(nameof(Nome));
+            }
         }
 
-        public string Description
+        public string Sexo
         {
-            get => description;
-            set => SetProperty(ref description, value);
+            get => sexo;
+            set
+            {
+                sexo = value;
+                OnPropertyChanged(nameof(Sexo));
+            }
+        }
+
+        public string DataNascimento
+        {
+            get => dataNascimento;
+            set
+            {
+                dataNascimento = value;
+                OnPropertyChanged(nameof(DataNascimento));
+            }
         }
 
         public Command SaveCommand { get; }
@@ -43,22 +68,22 @@ namespace IntelitraderMobile.ViewModels
 
         private async void OnCancel()
         {
-            // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            Usuario newItem = new Usuario()
             {
-                Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
+                Nome = nome,
+                Sexo = sexo,
+                DataNascimento = Convert.ToDateTime(DataNascimento),
             };
 
-            await DataStore.AddItemAsync(newItem);
+            Console.WriteLine(newItem);
 
-            // This will pop the current page off the navigation stack
+            await _ApiUsuarioService.AddUser(newItem);
+
             await Shell.Current.GoToAsync("..");
         }
     }

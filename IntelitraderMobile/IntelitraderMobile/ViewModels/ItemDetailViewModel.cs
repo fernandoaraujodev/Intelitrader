@@ -1,7 +1,7 @@
 ﻿using IntelitraderMobile.Models;
+using IntelitraderMobile.Services;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace IntelitraderMobile.ViewModels
@@ -10,20 +10,58 @@ namespace IntelitraderMobile.ViewModels
     public class ItemDetailViewModel : BaseViewModel
     {
         private string itemId;
-        private string text;
-        private string description;
-        public string Id { get; set; }
+        private string nome;
+        private string sexo;
+        private DateTime dataNascimento;
+        private bool _isPlaceHolderVisible;
+        public Guid id { get; set; }
 
-        public string Text
+        ApiUsuarioService _ApiUsuarioService;
+
+        public ItemDetailViewModel()
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            _ApiUsuarioService = new ApiUsuarioService();
+
+            DeleteItemCommand = new Command(DeleteItemId);
+            EditItemCommand = new Command(EditItemId);
         }
 
-        public string Description
+        public bool IsPlaceHolderVisible
         {
-            get => description;
-            set => SetProperty(ref description, value);
+            get => _isPlaceHolderVisible;
+            set
+            {
+                _isPlaceHolderVisible = value;
+            }
+        }
+
+        public string Nome
+        {
+            get => nome;
+            set
+            {
+                nome = value;
+                OnPropertyChanged(nameof(Nome));
+            }
+        }
+
+        public string Sexo
+        {
+            get => sexo;
+            set
+            {
+                sexo = value;
+                OnPropertyChanged(nameof(Sexo));
+            }
+        }
+        public DateTime DataNascimento
+        {
+            get => dataNascimento;
+            set
+            {
+                dataNascimento = value;
+                OnPropertyChanged(nameof(DataNascimento));
+            }
         }
 
         public string ItemId
@@ -43,15 +81,50 @@ namespace IntelitraderMobile.ViewModels
         {
             try
             {
-                var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
-                Text = item.Text;
-                Description = item.Description;
+                var item = await _ApiUsuarioService.GetUser(itemId);
+
+                id = item.Id;
+                Nome = item.Nome;
+                Sexo = item.Sexo;
+                DataNascimento = item.DataNascimento;
             }
             catch (Exception)
             {
                 Debug.WriteLine("Failed to Load Item");
             }
         }
+
+        public async void DeleteItemId()
+        {
+            try
+            {
+                await _ApiUsuarioService.DeleteUser(itemId);
+
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Failed to Load Item");
+            }
+        }
+
+        public async void EditItemId()
+        {
+            Usuario newItem = new Usuario()
+            {
+                Nome = Nome,
+                Sexo = Sexo,
+                DataNascimento = DataNascimento,
+                DataAlteracao = DateTime.Now
+            };
+
+            await _ApiUsuarioService.UpdateUser(itemId, newItem);
+
+            await Shell.Current.GoToAsync("..");
+        }
+
+        public Command DeleteItemCommand { get; }
+        public Command EditItemCommand { get; }
+
     }
 }

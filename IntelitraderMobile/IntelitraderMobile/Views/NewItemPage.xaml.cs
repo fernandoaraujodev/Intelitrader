@@ -10,7 +10,7 @@ namespace IntelitraderMobile.Views
 {
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Usuario Item { get; set; }
 
         public NewItemPage()
         {
