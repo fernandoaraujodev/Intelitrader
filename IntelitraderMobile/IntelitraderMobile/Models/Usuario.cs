@@ -15,7 +15,7 @@ namespace IntelitraderMobile.Models
         public DateTime DataNascimento { get; set; }
 
         [JsonPropertyName("sexo")]
-        public string Sexo { get; set; }
+        public int Sexo { get; set; }
 
         [JsonPropertyName("dataCriacao")]
         public DateTime DataCriacao { get; set; }

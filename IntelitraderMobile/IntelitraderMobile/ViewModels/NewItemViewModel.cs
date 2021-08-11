@@ -11,7 +11,7 @@ namespace IntelitraderMobile.ViewModels
     public class NewItemViewModel : BaseViewModel
     {
         private string nome;
-        private string sexo;
+        private int sexo;
         private string dataNascimento;
 
         ApiUsuarioService _ApiUsuarioService;
@@ -29,7 +29,7 @@ namespace IntelitraderMobile.ViewModels
         private bool ValidateSave()
         {
             return !String.IsNullOrWhiteSpace(nome)
-                && !String.IsNullOrWhiteSpace(sexo)
+                && !String.IsNullOrWhiteSpace(sexo.ToString())
                 && !String.IsNullOrWhiteSpace(dataNascimento);
         }
 
@@ -43,7 +43,7 @@ namespace IntelitraderMobile.ViewModels
             }
         }
 
-        public string Sexo
+        public int Sexo
         {
             get => sexo;
             set
@@ -75,9 +75,12 @@ namespace IntelitraderMobile.ViewModels
         {
             Usuario newItem = new Usuario()
             {
+                DataAlteracao = DateTime.Now,
+                DataCriacao = DateTime.Now,
+                Id = Guid.NewGuid(),
                 Nome = nome,
                 Sexo = sexo,
-                DataNascimento = Convert.ToDateTime(DataNascimento),
+                DataNascimento = Convert.ToDateTime(DataNascimento)
             };
 
             Console.WriteLine(newItem);

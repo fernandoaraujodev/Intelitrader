@@ -5,11 +5,12 @@
              xmlns:vm="clr-namespace:IntelitraderMobile.ViewModels"
              Title="{Binding Title}">
     
-    <!--Tela inicial-->
-    
+    <!--Tela inicial
     <ContentPage.BindingContext>
-        <vm:AboutViewModel />
+        
+    
     </ContentPage.BindingContext>
+    -->
     
     <ContentPage.Resources>
         <ResourceDictionary>

@@ -11,7 +11,7 @@ namespace IntelitraderMobile.ViewModels
     {
         private string itemId;
         private string nome;
-        private string sexo;
+        private int sexo;
         private DateTime dataNascimento;
         private bool _isPlaceHolderVisible;
         public Guid id { get; set; }
@@ -45,7 +45,7 @@ namespace IntelitraderMobile.ViewModels
             }
         }
 
-        public string Sexo
+        public int Sexo
         {
             get => sexo;
             set

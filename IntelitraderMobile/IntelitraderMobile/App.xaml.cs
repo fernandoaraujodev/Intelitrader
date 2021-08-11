@@ -13,7 +13,7 @@ namespace IntelitraderMobile
         {
             InitializeComponent();
 
-            DependencyService.Register<ApiUsuarioService>();
+            Startup.ConfigureServices();
             MainPage = new AppShell();
         }
 

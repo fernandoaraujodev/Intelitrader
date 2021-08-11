@@ -13,7 +13,7 @@ namespace IntelitraderMobile.Services
     {
 
         HttpClient _httpClient = new HttpClient();
-        private string baseUrl = "http://10.0.2.2:5000/api/v1/usuario";
+        private string baseUrl = "http://192.168.0.16:5000/v1/usuario";
 
         public async Task<IEnumerable<Usuario>> GetUsers()
         {
