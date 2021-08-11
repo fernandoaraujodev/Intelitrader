@@ -60,11 +60,13 @@ namespace GerenciandoUsuario_API.Controllers
                     _logger.LogInformation($"Listagem de usuários realizada");
                     System.Console.WriteLine($"Listagem de usuários realizada");
 
-                    return Ok(new
-                    {
-                        Total  = usuario.Count,
-                        Data = usuario
-                    });
+                    //return Ok(new
+                    //{
+                    //    Total  = usuario.Count,
+                    //    Data = usuario
+                    //});
+
+                    return Ok(usuario);
                 }
             }
 

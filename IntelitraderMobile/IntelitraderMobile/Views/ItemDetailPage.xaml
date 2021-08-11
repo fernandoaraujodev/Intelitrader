@@ -43,8 +43,8 @@
 
 
         <StackLayout Orientation="Horizontal">
-            <Button Text="Remove" Command="{Binding DeleteItemCommand}" HorizontalOptions="FillAndExpand"></Button>
-            <Button Text="Edit" Command="{Binding EditItemCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Remover" Command="{Binding DeleteItemCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Editar" Command="{Binding EditItemCommand}" HorizontalOptions="FillAndExpand"></Button>
         </StackLayout>
     </StackLayout>
 </ContentPage>

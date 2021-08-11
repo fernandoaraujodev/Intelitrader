@@ -12,7 +12,7 @@ namespace IntelitraderMobile.ViewModels
     {
         private string nome;
         private int sexo;
-        private string dataNascimento;
+        private DateTime dataNascimento;
 
         ApiUsuarioService _ApiUsuarioService;
 
@@ -30,7 +30,7 @@ namespace IntelitraderMobile.ViewModels
         {
             return !String.IsNullOrWhiteSpace(nome)
                 && !String.IsNullOrWhiteSpace(sexo.ToString())
-                && !String.IsNullOrWhiteSpace(dataNascimento);
+                && !String.IsNullOrWhiteSpace(dataNascimento.ToString());
         }
 
         public string Nome
@@ -53,7 +53,7 @@ namespace IntelitraderMobile.ViewModels
             }
         }
 
-        public string DataNascimento
+        public DateTime DataNascimento
         {
             get => dataNascimento;
             set
@@ -80,7 +80,7 @@ namespace IntelitraderMobile.ViewModels
                 Id = Guid.NewGuid(),
                 Nome = nome,
                 Sexo = sexo,
-                DataNascimento = Convert.ToDateTime(DataNascimento)
+                DataNascimento = dataNascimento
             };
 
             Console.WriteLine(newItem);
