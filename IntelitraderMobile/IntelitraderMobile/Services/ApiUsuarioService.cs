@@ -13,7 +13,7 @@ namespace IntelitraderMobile.Services
     {
 
         HttpClient _httpClient = new HttpClient();
-        private string baseUrl = "http://192.168.0.16:5000/v1/usuario";
+        private string baseUrl = "http://192.168.0.16:5000/v1/usuario/";
 
         public async Task<IEnumerable<Usuario>> GetUsers()
         {
@@ -49,9 +49,11 @@ namespace IntelitraderMobile.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public Task DeleteUser(string id)
+        public async Task DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.DeleteAsync(baseUrl + id);
+
+            response.EnsureSuccessStatusCode();
         }
 
         public Task UpdateUser(string id, Usuario usuario)
