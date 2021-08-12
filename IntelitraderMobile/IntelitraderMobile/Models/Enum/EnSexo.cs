@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace GerenciandoUsuario_API.Domains.Enum
+namespace IntelitraderMobile.Models.Enum
 {
     public enum EnSexo
     {

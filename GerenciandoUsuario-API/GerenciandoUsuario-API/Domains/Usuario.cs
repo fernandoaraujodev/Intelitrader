@@ -23,7 +23,7 @@ namespace GerenciandoUsuario_API.Domains
 
 
         [Required(ErrorMessage = "O campo {0} não pode ficar em branco.")]
-        [Range(1, 3)]
+        //[Range(1, 3)]
         public EnSexo Sexo { get; set; }
    
 

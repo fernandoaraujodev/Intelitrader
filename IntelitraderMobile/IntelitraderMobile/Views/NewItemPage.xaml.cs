@@ -1,10 +1,8 @@
 ﻿using IntelitraderMobile.Models;
+using IntelitraderMobile.Models.Enum;
 using IntelitraderMobile.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace IntelitraderMobile.Views
 {
@@ -12,10 +10,12 @@ namespace IntelitraderMobile.Views
     {
         public Usuario Item { get; set; }
 
+
         public NewItemPage()
         {
             InitializeComponent();
             BindingContext = new NewItemViewModel();
+
         }
     }
 }

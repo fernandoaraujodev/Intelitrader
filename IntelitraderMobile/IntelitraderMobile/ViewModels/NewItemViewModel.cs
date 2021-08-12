@@ -1,6 +1,9 @@
 ﻿using IntelitraderMobile.Models;
+using IntelitraderMobile.Models.Enum;
 using IntelitraderMobile.Services;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace IntelitraderMobile.ViewModels
@@ -8,7 +11,7 @@ namespace IntelitraderMobile.ViewModels
     public class NewItemViewModel : BaseViewModel
     {
         private string nome;
-        private int sexo;
+        private EnSexo sexo;
         private DateTime dataNascimento;
 
         ApiUsuarioService _ApiUsuarioService;
@@ -21,6 +24,7 @@ namespace IntelitraderMobile.ViewModels
             CancelCommand = new Command(OnCancel);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
+
         }
 
         private bool ValidateSave()
@@ -40,7 +44,7 @@ namespace IntelitraderMobile.ViewModels
             }
         }
 
-        public int Sexo
+        public EnSexo Sexo
         {
             get => sexo;
             set
@@ -86,5 +90,6 @@ namespace IntelitraderMobile.ViewModels
 
             await Shell.Current.GoToAsync("..");
         }
+
     }
 }

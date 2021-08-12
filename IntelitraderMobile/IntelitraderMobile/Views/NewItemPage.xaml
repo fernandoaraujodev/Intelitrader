@@ -8,9 +8,15 @@
             
             <Label Text="Nome" FontSize="Medium" />
             <Entry Text="{Binding Nome, Mode=TwoWay}" FontSize="Medium" />
-            
+
             <Label Text="Sexo" FontSize="Medium" />
-            <Editor Text="{Binding Sexo, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Picker x:Name="pckSexo" HorizontalOptions="FillAndExpand" Title="Selecione">
+                <Picker.Items>
+                    <x:String>Masculino</x:String>
+                    <x:String>Feminino</x:String>
+                    <x:String>Outros</x:String>
+                </Picker.Items>
+            </Picker>
 
             <Label Text="Data de Nascimento" FontSize="Medium" />
             <Editor Text="{Binding DataNascimento, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />

@@ -20,15 +20,14 @@
                                        AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
         <!--Sexo-->
         <Label Text="Sexo" FontSize="Medium" />
-        <Editor
-                    Text="{Binding Sexo, Mode=TwoWay}"
-                    HorizontalOptions="FillAndExpand"
-                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                    AbsoluteLayout.LayoutBounds="0,0,1.01,100">
-        </Editor>
-        <Label Text="{Binding Sexo}" IsVisible="{Binding IsPlaceHolderVisible}" HorizontalTextAlignment="Center"
-                                       AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
-                                       AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
+        <Picker x:Name="pckSex" HorizontalOptions="FillAndExpand" Title="Selecione" >
+            <Picker.Items Text="{Binding Sexo, Mode=TwoWay}">
+                <x:String>Masculino</x:String>
+                <x:String>Feminino</x:String>
+                <x:String>Outros</x:String>
+            </Picker.Items>
+        </Picker>
+        
         <!--Data de nascimento-->
         <Label Text="Data de Nascimento" FontSize="Medium" />
         <Editor

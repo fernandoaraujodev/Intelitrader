@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntelitraderMobile.Models.Enum;
+using System;
 using System.Text.Json.Serialization;
 
 namespace IntelitraderMobile.Models
@@ -15,7 +16,7 @@ namespace IntelitraderMobile.Models
         public DateTime DataNascimento { get; set; }
 
         [JsonPropertyName("sexo")]
-        public int Sexo { get; set; }
+        public EnSexo Sexo { get; set; }
 
         [JsonPropertyName("dataCriacao")]
         public DateTime DataCriacao { get; set; }

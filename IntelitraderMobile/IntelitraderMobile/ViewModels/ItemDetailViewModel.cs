@@ -1,4 +1,5 @@
 ﻿using IntelitraderMobile.Models;
+using IntelitraderMobile.Models.Enum;
 using IntelitraderMobile.Services;
 using System;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace IntelitraderMobile.ViewModels
     {
         private string itemId;
         private string nome;
-        private int sexo;
+        private EnSexo sexo;
         private DateTime dataNascimento;
         private bool _isPlaceHolderVisible;
         public Guid id { get; set; }
@@ -45,7 +46,7 @@ namespace IntelitraderMobile.ViewModels
             }
         }
 
-        public int Sexo
+        public EnSexo Sexo
         {
             get => sexo;
             set

@@ -10,7 +10,7 @@
     <!--PAGINA DE LISTAGEM-->
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Novo Usuario" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Icon="iconAdd.png" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
