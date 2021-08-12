@@ -6,9 +6,9 @@
     
     <!--PAGINA DE DETALHE-->
 
-    <StackLayout Spacing="20" Padding="15">
+    <StackLayout Spacing="10" Padding="20">
         <!--Nome-->
-        <Label Text="Nome:" FontSize="Medium" />
+        <Label Text="Nome" FontSize="Medium" />
         <Editor
                     Text="{Binding Nome, Mode=TwoWay}"
                     HorizontalOptions="FillAndExpand"
@@ -19,7 +19,7 @@
                                        AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
                                        AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
         <!--Sexo-->
-        <Label Text="Sexo:" FontSize="Medium" />
+        <Label Text="Sexo" FontSize="Medium" />
         <Editor
                     Text="{Binding Sexo, Mode=TwoWay}"
                     HorizontalOptions="FillAndExpand"
@@ -30,7 +30,7 @@
                                        AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
                                        AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
         <!--Data de nascimento-->
-        <Label Text="Data de Nascimento:" FontSize="Medium" />
+        <Label Text="Data de Nascimento" FontSize="Medium" />
         <Editor
                     Text="{Binding DataNascimento, Mode=TwoWay}"
                     HorizontalOptions="FillAndExpand"
@@ -43,8 +43,8 @@
 
 
         <StackLayout Orientation="Horizontal">
-            <Button Text="Remover" Command="{Binding DeleteItemCommand}" HorizontalOptions="FillAndExpand"></Button>
-            <Button Text="Editar" Command="{Binding EditItemCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Remover" Command="{Binding DeleteItemCommand}" HorizontalOptions="FillAndExpand" BackgroundColor="Red"></Button>
+            <Button Text="Editar" Command="{Binding EditItemCommand}" HorizontalOptions="FillAndExpand" BackgroundColor="LightBlue"></Button>
         </StackLayout>
     </StackLayout>
 </ContentPage>

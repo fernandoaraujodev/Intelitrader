@@ -56,9 +56,12 @@ namespace IntelitraderMobile.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public Task UpdateUser(string id, Usuario usuario)
+        public async Task UpdateUser(string id, Usuario usuario)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.PutAsync(baseUrl + id,
+                new StringContent(JsonSerializer.Serialize(usuario), Encoding.UTF8, "application/json"));
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }
