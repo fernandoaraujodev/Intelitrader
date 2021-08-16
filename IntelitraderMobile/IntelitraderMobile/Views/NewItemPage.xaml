@@ -19,7 +19,10 @@
             </Picker>
 
             <Label Text="Data de Nascimento" FontSize="Medium" />
-            <Editor Text="{Binding DataNascimento, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+
+            <DatePicker MinimumDate="{Binding MinDate}"
+            MaximumDate="{Binding MaxDate}"
+            Date="{Binding DataNascimento, Mode=TwoWay}" />
 
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancelar" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand" BackgroundColor="Gray"></Button>

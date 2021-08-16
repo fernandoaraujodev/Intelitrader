@@ -18,6 +18,7 @@
         <Label Text="{Binding Nome}" IsVisible="{Binding IsPlaceHolderVisible}" HorizontalTextAlignment="Center"
                                        AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
                                        AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
+        
         <!--Sexo-->
         <Label Text="Sexo" FontSize="Medium" />
         <Picker x:Name="pckSex" HorizontalOptions="FillAndExpand" Title="Selecione" >
@@ -27,18 +28,15 @@
                 <x:String>Outros</x:String>
             </Picker.Items>
         </Picker>
-        
+
+        <Picker ItemsSource="{Binding EnSexo, Mode=TwoWay}" SelectedItem="{Binding Sexo}"/>
+
+
         <!--Data de nascimento-->
         <Label Text="Data de Nascimento" FontSize="Medium" />
-        <Editor
-                    Text="{Binding DataNascimento, Mode=TwoWay}"
-                    HorizontalOptions="FillAndExpand"
-                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                    AbsoluteLayout.LayoutBounds="0,0,1.01,100">
-        </Editor>
-        <Label Text="{Binding DataNascimento}" IsVisible="{Binding IsPlaceHolderVisible}" HorizontalTextAlignment="Center"
-                                       AbsoluteLayout.LayoutBounds="0.5,0.5, 1, 0.5" VerticalTextAlignment="Center"
-                                       AbsoluteLayout.LayoutFlags="All" InputTransparent="True"/>
+        <DatePicker MinimumDate="{Binding MinDate}"
+                    MaximumDate="08/16/2021"
+                    Date="{Binding DataNascimento, Mode=TwoWay}" />
 
 
         <StackLayout Orientation="Horizontal">
