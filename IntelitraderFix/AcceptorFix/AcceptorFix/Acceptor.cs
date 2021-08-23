@@ -9,17 +9,21 @@ namespace AcceptorFix
     {
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        static readonly decimal DEFAULT_MARKET_PRICE = 3;
+        //static readonly decimal DEFAULT_MARKET_PRICE = 37;
+
 
         public void OnMessage(QuickFix.FIX44.NewOrderSingle n, SessionID s)
         {
+            //instanciando
             Symbol symbol = n.Symbol;
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = new Price(DEFAULT_MARKET_PRICE);
+            Price price = n.Price;
             ClOrdID clOrdID = n.ClOrdID;
 
+
+            //dicionarios
             var ordTypes = new Dictionary<string, string>(){
                 {"1", "market"},
                 {"2", "limit"},
